@@ -1,6 +1,6 @@
 <template>
   <div>
-    Footer
+    Footer Ant Design ©2018 Created by Ant UED sparrow
   </div>
 </template>
 
