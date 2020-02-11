@@ -13,6 +13,8 @@ const routes = [
   //增加登录与注册的路由
   {
     path: "/user",
+    //hideInMenu 使这个路由item不传递给菜单
+    hideInMenu: true,
     //挂载 RenderRouterView
     // component: RenderRouterView,
     // component 改成异步加载
@@ -52,11 +54,15 @@ const routes = [
       {
         path: "/dashboard",
         name: "dashboard",
+        //添加字段用于 sidemenu ,icon的名字可以是任意组件库自带的图标
+        meta: { icon: "dashboard", title: "仪表盘" },
         component: { render: h => h("router-view") },
         children: [
           {
             path: "/dashboard/analysis",
             name: "analysis",
+            //这个meta不需要图标，只在一级菜单给图标
+            meta: { title: "分析页" },
             component: () =>
               import(
                 /* webpackChunkName: "about" */ "../views/Dashboard/Analysis"
@@ -69,16 +75,23 @@ const routes = [
         path: "/form",
         name: "form",
         component: { render: h => h("router-view") },
+        meta: { icon: "form", title: "表单" },
         children: [
           {
             path: "/form/basic-form",
             name: "basicform",
+            //这个meta不需要图标，只在一级菜单给图标
+            meta: { title: "基础表单" },
             component: () =>
               import(/* webpackChunkName: "about" */ "../views/Forms/BasicForm")
           },
           {
             path: "/form/step-form",
             name: "stepform",
+            //它的儿子不传递给sidemenu
+            hideChildrenInMenu: true,
+            //这个meta不需要图标，只在一级菜单给图标
+            meta: { title: "分步表单" },
             component: () =>
               import(/* webpackChunkName: "about" */ "../views/Forms/StepForm"),
             children: [
@@ -120,6 +133,8 @@ const routes = [
   {
     path: "*",
     name: "404",
+    //不传递给sidemenu
+    hideInMenu: true,
     component: NotFound
   }
   // {
@@ -144,8 +159,11 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach((to, form, next) => {
-  NProgress.start();
+router.beforeEach((to, from, next) => {
+  //假如页面不变，则不需要加载进度条
+  if (to.path !== from.path) {
+    NProgress.start();
+  }
   next();
 });
 
