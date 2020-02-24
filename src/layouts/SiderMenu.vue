@@ -52,6 +52,7 @@
  * SubMenu1.vue https://github.com/vueComponent/ant-design-vue/blob/master/components/menu/demo/SubMenu1.vue
  * */
 import SubMenu from "./SubMenu";
+import { check } from "../utils/auth";
 export default {
   props: {
     theme: {
@@ -108,7 +109,11 @@ export default {
     getMenuData(routes = [], parentKeys = [], selectedKey) {
       const menuData = [];
       //循环访问routes配置
-      routes.forEach(item => {
+      //修改，以增加对权限的隐藏部分菜单的处理
+      for (let item of routes) {
+        if (item.meta && item.meta.authority && !check(item.meta.authority)) {
+          break;
+        }
         if (item.name && !item.hideInMenu) {
           this.openKeysMap[item.path] = parentKeys;
           this.selectedKeysMap[item.path] = [selectedKey || item.path];
@@ -141,8 +146,43 @@ export default {
             ...this.getMenuData(item.children, [...parentKeys, item.path])
           );
         }
-      });
+      }
       //循环结束
+      // routes.forEach(item => {
+      //   if (item.name && !item.hideInMenu) {
+      //     this.openKeysMap[item.path] = parentKeys;
+      //     this.selectedKeysMap[item.path] = [selectedKey || item.path];
+      //     //? ...item
+      //     const newItem = { ...item };
+      //     //?
+      //     delete newItem.children;
+      //     if (item.children && !item.hideChildrenInMenu) {
+      //       //递归时，把 parentKeys 传过去
+      //       newItem.children = this.getMenuData(item.children, [
+      //         ...parentKeys,
+      //         item.path
+      //       ]);
+      //     }
+      //     //当 hideChildrenInMenu 为 true
+      //     else {
+      //       this.getMenuData(
+      //         item.children,
+      //         selectedKey ? parentKeys : [...parentKeys, item.path],
+      //         selectedKey || item.path
+      //       );
+      //     }
+      //     menuData.push(newItem);
+      //   } else if (
+      //     !item.hideInMenu &&
+      //     !item.hideChildrenInMenu &&
+      //     item.children
+      //   ) {
+      //     menuData.push(
+      //       ...this.getMenuData(item.children, [...parentKeys, item.path])
+      //     );
+      //   }
+      // });
+      // //循环结束
       return menuData;
     }
   }

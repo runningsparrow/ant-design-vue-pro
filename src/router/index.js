@@ -1,9 +1,17 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+// 引入一个 roll back的组件
+import findLast from "lodash/findLast";
+// 导入 notificaton 组件
+import { notification } from "ant-design-vue";
 // import Home from "../views/Home.vue";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import NotFound from "../views/404";
+import Forbidden from "../views/403";
+//引入 auth.js 的函数
+import { check, isLogin } from "../utils/auth";
+
 //引入 RenderRouterView
 // import RenderRouterView from "../components/RenderRouterView";
 
@@ -43,6 +51,7 @@ const routes = [
   //加入其他布局要素 start
   {
     path: "/",
+    meta: { authority: ["user", "admin"] },
     component: () =>
       import(/* webpackChunkName: "about" */ "../layouts/BasicLayout"),
     children: [
@@ -75,7 +84,7 @@ const routes = [
         path: "/form",
         name: "form",
         component: { render: h => h("router-view") },
-        meta: { icon: "form", title: "表单" },
+        meta: { icon: "form", title: "表单", authority: ["admin"] },
         children: [
           {
             path: "/form/basic-form",
@@ -129,6 +138,13 @@ const routes = [
       }
     ]
   },
+  //为权限检查增加一个 403的页面
+  {
+    path: "/403",
+    name: "403",
+    hideInMenu: true,
+    component: Forbidden
+  },
   //加入其他布局要素 end
   {
     path: "*",
@@ -163,6 +179,30 @@ router.beforeEach((to, from, next) => {
   //假如页面不变，则不需要加载进度条
   if (to.path !== from.path) {
     NProgress.start();
+  }
+
+  //增加权限判断的处理
+  const record = findLast(to.matched, record => record.meta.authority);
+
+  if (record && !check(record.meta.authority)) {
+    //判断是否已登录
+    if (!isLogin() && to.path !== "/user/login") {
+      next({
+        path: "/user/login"
+      });
+    }
+    //如果登录了，跳转到 403
+    else if (to.path !== "/403") {
+      notification.error({
+        message: "403",
+        description: "你没有权限访问，请联系管理员！"
+      });
+      next({
+        path: "/403"
+      });
+    }
+    //此处也要结束掉进度掉
+    NProgress.done();
   }
   next();
 });
