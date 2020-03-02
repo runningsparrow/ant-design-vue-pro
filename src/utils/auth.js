@@ -2,8 +2,8 @@
 
 export function getCurrentAuthority() {
   //切换值用于测试
-  // return ["admin"];
-  return ["user"];
+  return ["admin"];
+  // return ["user"];
 }
 
 //一个校验权限的函数
