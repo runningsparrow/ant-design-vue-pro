@@ -2,7 +2,8 @@ import Vue from "vue";
 // import Antd from 'ant-design-vue';
 import App from "./App.vue";
 import router from "./router";
-import store from "./store";
+import store from "./store"; //下面一种写法也可以
+// import store from "./store/index.js";
 // import "ant-design-vue/dist/antd.less";
 //引入 Layout 用于 BasicLayout布局
 import {
