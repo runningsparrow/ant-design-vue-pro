@@ -14,7 +14,8 @@ import {
   Radio,
   Menu,
   Form,
-  Input
+  Input,
+  Select
 } from "ant-design-vue";
 // import "ant-design-vue/lib/button/style";
 //引入 Authorized.vue
@@ -39,6 +40,8 @@ Vue.use(Menu);
 //为使用表单引入 Form Input
 Vue.use(Form);
 Vue.use(Input);
+//引入Select 组件
+Vue.use(Select);
 //引入 Authorized，需要使用 component方式引入
 Vue.component("Authorized", Authorized);
 //引入directives下的 ,可以使用 use 方式引入，用于控制左侧缩放按钮
