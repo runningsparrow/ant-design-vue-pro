@@ -34,12 +34,14 @@ export default {
       number: number || ""
     };
   },
-  //值变化后的处理
-  handleTypeChange(val) {
-    this.$emit("change", { ...this.value, type: val });
-  },
-  handleNumberChange(e) {
-    this.$emit("change", { ...this.value, number: e.target.value });
+  methods: {
+    //值变化后的处理
+    handleTypeChange(val) {
+      this.$emit("change", { ...this.value, type: val });
+    },
+    handleNumberChange(e) {
+      this.$emit("change", { ...this.value, number: e.target.value });
+    }
   }
 };
 </script>

@@ -3,7 +3,12 @@ import request from "../../utils/request";
 
 const state = {
   step: {
-    payAccount: "123456"
+    payAccount: "123456",
+    //增加收款账号的属性
+    receiveAccount: {
+      type: "alipay",
+      number: ""
+    }
   }
 };
 

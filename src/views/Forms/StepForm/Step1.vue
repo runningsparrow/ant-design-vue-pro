@@ -21,15 +21,28 @@
       :labelCol="formItemLayout.labelCol"
       :wrapperCol="formItemLayout.wrapperCol"
     >
-      <a-input
+      <!-- <a-input -->
+      <ReceiverAccount
         v-decorator="[
           'receiveAccount',
           {
             initialValue: step.receiveAccount,
-            rules: [{ required: true, message: '请输入收款账号' }]
+            rules: [
+              {
+                required: true,
+                message: '请输入收款账号',
+                validator: (rule, value, callback) => {
+                  if (value && value.number) {
+                    //?
+                    callback();
+                  } else {
+                    callback(false);
+                  }
+                }
+              }
+            ]
           }
         ]"
-        placeholder="请输入付款账号"
       />
     </a-form-item>
     <a-form-item>
@@ -39,7 +52,13 @@
 </template>
 
 <script>
+//引入 ReceiveAccount
+// import ReceiverAccount from '../../../components/ReceiverAccount'
+//简化引入
+import ReceiverAccount from "@/components/ReceiverAccount";
 export default {
+  //注册
+  components: { ReceiverAccount },
   data() {
     this.form = this.$form.createForm(this);
     return {
