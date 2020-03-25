@@ -47,6 +47,13 @@ Vue.component("Authorized", Authorized);
 //引入directives下的 ,可以使用 use 方式引入，用于控制左侧缩放按钮
 Vue.use(Auth);
 
+//图标
+const IconFont = Icon.createFromIconfontCN({
+  scriptUrl: "//at.alicdn.com/t/font_1713415_42mc7gfgh57.js"
+});
+//注册图标组件
+Vue.component("IconFont", IconFont);
+
 new Vue({
   router,
   store,
