@@ -3,6 +3,8 @@
     分析页
 
     <div>
+      {{ $t("message")["app.dashbaord.analysis.timeLabel"] }} :
+      <a-date-picker></a-date-picker>
       <Chart :option="chartOption" style="height: 400px" />
       <button @click="changeoption">点击刷新</button>
     </div>

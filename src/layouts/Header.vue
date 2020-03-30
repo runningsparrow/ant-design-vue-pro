@@ -23,6 +23,7 @@ export default {
   methods: {
     localeChange({ key }) {
       this.$router.push({ query: { ...this.$router.query, locale: key } });
+      this.$i18n.locale = key;
     }
   }
 };
