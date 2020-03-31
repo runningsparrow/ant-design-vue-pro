@@ -8,6 +8,8 @@ import store from "./store"; //下面一种写法也可以
 import enUS from "./locale/enUS";
 import zhCN from "./locale/zhCN";
 import queryString from "query-string";
+// Import Vue and vue-highlgihtjs
+import VueHighlightJS from "vue-highlightjs";
 // import "ant-design-vue/dist/antd.less";
 //引入 Layout 用于 BasicLayout布局
 import {
@@ -29,6 +31,8 @@ import {
 import Authorized from "./components/Authorized";
 //引入directives下的 auth
 import Auth from "./directives/auth";
+//highlight 样式
+import "highlight.js/styles/github.css";
 
 Vue.config.productionTip = false;
 
@@ -58,6 +62,8 @@ Vue.component("Authorized", Authorized);
 //引入directives下的 ,可以使用 use 方式引入，用于控制左侧缩放按钮
 Vue.use(Auth);
 Vue.use(VueI18n);
+// Tell Vue.js to use vue-highlightjs
+Vue.use(VueHighlightJS);
 
 const i18n = new VueI18n({
   locale: queryString.parse(location.search).locale || "zhCN",

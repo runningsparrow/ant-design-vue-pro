@@ -7,6 +7,8 @@
       <a-date-picker></a-date-picker>
       <Chart :option="chartOption" style="height: 400px" />
       <button @click="changeoption">点击刷新</button>
+      <!-- If you want to highlight hardcoded source-code -->
+      <pre v-highlightjs="chartCode"><code class="html"></code></pre>
     </div>
   </div>
 </template>
@@ -19,6 +21,7 @@
 //引入二次封装 axios的 request.js
 import request from "../../utils/request";
 import Chart from "../../components/Chart";
+import chartCode from "!!raw-loader!../../components/Chart";
 export default {
   //将图标的option移动到此处(父组件)
   data() {
@@ -39,7 +42,9 @@ export default {
         //     data: [5, 20, 36, 10, 10, 20]
         //   }
         // ]
-      }
+      },
+      //
+      chartCode
     };
   },
   mounted() {
