@@ -1,3 +1,6 @@
+const currentAuth = ["admin"];
+export { currentAuth };
+
 //先临时做一个模拟获取权限的函数
 
 export function getCurrentAuthority() {
