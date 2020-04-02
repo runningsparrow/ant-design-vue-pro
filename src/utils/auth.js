@@ -5,8 +5,9 @@ export { currentAuth };
 
 export function getCurrentAuthority() {
   //切换值用于测试
-  return ["admin"];
+  // return ["admin"];
   // return ["user"];
+  return currentAuth;
 }
 
 //一个校验权限的函数
